@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import lithium1978.m3uMasterCreator.backendData.*;
 import lithium1978.m3uMasterCreator.controller.*;
+import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
 
 
 public class CheckBoxArray {

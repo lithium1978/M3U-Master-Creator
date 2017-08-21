@@ -27,7 +27,7 @@ public class WriteTempFile {
 	static int writeIndex = 0;
 	static int criteriaCount = 0;
 
-	static void checkBoxStatus (ArrayList<JCheckBox> checkBoxes2, ArrayList<String> checkBoxLab) {
+	public static void checkBoxStatus (ArrayList<JCheckBox> checkBoxes2, ArrayList<String> checkBoxLab) {
 
 		for(int i = 0; i< checkBoxes2.size(); i++) {
 

@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import backendData.Channel;
-import controller.ChannelController;
-import controller.GroupTitleController;
-import fileInputOutput.WriteFile;
-import guiCreation.GroupTableModel;
+import lithium1978.m3uMasterCreator.backendData.*;
+import lithium1978.m3uMasterCreator.controller.*;
+import lithium1978.m3uMasterCreator.fileInputOutput.*;
+import lithium1978.m3uMasterCreator.model.*;
 
 
-public class selectedChannels {
+public class SelectedChannels {
 
 	private List<Channel> cd;
 	private List <GroupTitle> gt;
@@ -27,7 +26,7 @@ public class selectedChannels {
 		cd = ChannelController.getChannels();	
 		gt = GroupTitleController.getGroupTitles();
 		
-		GroupTableModel gtm = new GroupTableModel();
+		GroupTitleTableModel gtm = new GroupTitleTableModel();
 		gtm.setData(gt);
 		Map<String, String> groupTitleVals = new HashMap<>();
 		String replacementVal = new String();

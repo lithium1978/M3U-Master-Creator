@@ -3,17 +3,17 @@ package lithium1978.m3uMasterCreator.backendData;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.GroupTitleController;
-import guiCreation.GroupTableModel;
+import lithium1978.m3uMasterCreator.controller.*;
+import lithium1978.m3uMasterCreator.model.*;
 
 public class UpdateGroupTitleArray {
 
-	private GroupTableModel groupModel;
+	private GroupTitleTableModel groupModel;
 	private ArrayList<String> groupTitlesImported = new ArrayList<>();
 
 	public ArrayList<String> updateArray() {
 
-		groupModel = new GroupTableModel();
+		groupModel = new GroupTitleTableModel();
 		
 		List<GroupTitle> values = new ArrayList<>();
 		values = GroupTitleController.getGroupTitles();

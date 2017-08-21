@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import lithium1978.m3uMasterCreator.backendData.*;
+import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
+import lithium1978.m3uMasterCreator.model.GroupTitleTableModel;
 
 public class GroupTable extends JPanel implements ActionListener{
 	/**
@@ -28,14 +30,14 @@ public class GroupTable extends JPanel implements ActionListener{
 	 */
 	private static final long serialVersionUID = 2094247430837696261L;
 	private JTable groupTable;
-	private GroupTableModel groupModel;
+	private GroupTitleTableModel groupModel;
 	private JPopupMenu popup;
 	private JMenuItem copyItem;
 	private JMenuItem pasteItem;
 
 	public GroupTable() {
 
-		groupModel = new GroupTableModel();
+		groupModel = new GroupTitleTableModel();
 		groupTable = new JTable(groupModel);
 		popup = new JPopupMenu();
 		groupTable.setCellSelectionEnabled(true);

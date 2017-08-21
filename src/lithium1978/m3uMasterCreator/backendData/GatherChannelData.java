@@ -8,8 +8,8 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.apache.commons.lang3.StringUtils;
 
-import controller.ChannelController;
-import guiCreation.FileLogger;
+import lithium1978.m3uMasterCreator.controller.*;
+import lithium1978.m3uMasterCreator.fileInputOutput.*;
 
 public class GatherChannelData  {
 

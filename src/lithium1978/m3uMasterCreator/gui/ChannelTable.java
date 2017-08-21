@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import lithium1978.m3uMasterCreator.backendData.*;
+import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
+import lithium1978.m3uMasterCreator.model.ChannelTableModel;
 
 public class ChannelTable extends JPanel implements ActionListener {
 

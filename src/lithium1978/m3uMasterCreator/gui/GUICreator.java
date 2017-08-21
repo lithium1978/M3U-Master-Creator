@@ -47,6 +47,9 @@ import javax.swing.JTabbedPane;
 
 import lithium1978.m3uMasterCreator.backendData.*;
 import lithium1978.m3uMasterCreator.controller.*;
+import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
+import lithium1978.m3uMasterCreator.fileInputOutput.OpenFiles;
+import lithium1978.m3uMasterCreator.fileInputOutput.WriteTempFile;
 
 
 @SuppressWarnings("serial")
@@ -346,7 +349,7 @@ public class GUICreator extends JFrame {
 		btnFileOne.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {             
 
-				openFiles of = new openFiles();
+				OpenFiles of = new OpenFiles();
 				retFile = of.populateOpenFile(btnFileOne, textOpen1);
 				textOpen1.setText(retFile.getAbsolutePath());
 				openFile1 = retFile;
@@ -356,7 +359,7 @@ public class GUICreator extends JFrame {
 		//Listener for textOpen2 button
 		btnFileTwo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {             
-				openFiles of = new openFiles();
+				OpenFiles of = new OpenFiles();
 				retFile = of.populateOpenFile(btnFileOne, textOpen1);
 				textOpen2.setText(retFile.getAbsolutePath());
 				openFile2 = retFile;
@@ -366,7 +369,7 @@ public class GUICreator extends JFrame {
 		//Listener for textOpen3 button
 		btnFileThree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {             
-				openFiles of = new openFiles();
+				OpenFiles of = new OpenFiles();
 				retFile = of.populateOpenFile(btnFileOne, textOpen1);
 				textOpen3.setText(retFile.getAbsolutePath());
 				openFile3 = retFile;
@@ -410,7 +413,7 @@ public class GUICreator extends JFrame {
 				textOpen2.setText("");
 				textOpen3.setText("");
 				
-				checkBoxArray.analyzeFile();
+				CheckBoxArray.analyzeFile();
 				JPanel checkPanel = createCheckBoxes();
 				groupPane.setViewportView(checkPanel);
 				contentPane.validate();
@@ -453,7 +456,7 @@ public class GUICreator extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				selectedChannels sc = new selectedChannels();
+				SelectedChannels sc = new SelectedChannels();
 				sc.getData();
 				try { 	
 					File groupTitleSave =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/AutoSave_GTData.gfd"); 
@@ -564,10 +567,10 @@ public class GUICreator extends JFrame {
 
 		JPanel checkBoxP = new JPanel(new GridLayout(60,4));
 
-		String labels[]=checkBoxArray.getGroupIDs().toArray(new String[checkBoxArray.getGroupIDs().size()]);   
+		String labels[]=CheckBoxArray.getGroupIDs().toArray(new String[CheckBoxArray.getGroupIDs().size()]);   
 
 
-		for (int i = 0; i < checkBoxArray.getGroupIDs().size(); i++) {
+		for (int i = 0; i < CheckBoxArray.getGroupIDs().size(); i++) {
 
 			//creates Jcheckbox with title from getGroupIDs arraylist.  
 			JCheckBox checkbox = new JCheckBox(labels[i],false);   
