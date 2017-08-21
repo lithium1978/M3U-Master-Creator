@@ -10,6 +10,7 @@ public class App {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				System.out.println("run me");
 				new GUICreator();
 			}
 		});	

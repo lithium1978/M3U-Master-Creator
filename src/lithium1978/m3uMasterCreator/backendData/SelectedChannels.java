@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lithium1978.m3uMasterCreator.backendData.*;
 import lithium1978.m3uMasterCreator.controller.*;
 import lithium1978.m3uMasterCreator.fileInputOutput.*;
 import lithium1978.m3uMasterCreator.model.*;

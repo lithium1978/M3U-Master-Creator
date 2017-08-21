@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
-import lithium1978.m3uMasterCreator.gui.*;
 
 public class WriteFile {
 	

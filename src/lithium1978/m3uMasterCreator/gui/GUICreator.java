@@ -1,6 +1,5 @@
 package lithium1978.m3uMasterCreator.gui;
 
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -54,23 +53,20 @@ import lithium1978.m3uMasterCreator.fileInputOutput.WriteTempFile;
 
 @SuppressWarnings("serial")
 public class GUICreator extends JFrame {
-	public GUICreator() {
-	}
 	
-	JFrame frame;
 
 	JPanel checkPanel;
 	JPanel contentPane;
-	private ChannelTable channelTable;
-	static JPanel resultPan;
-	private GroupTable groupTable;
-	private JTextField textOpen2;
-	private JTextField textOpen1;
-	private JTextField textOpen3;
-	private Boolean appendData = false;
-	private int lineNum = 0;
-	private JFileChooser fileChooser;
-	private GroupTitleController groupController;
+	ChannelTable channelTable;
+	JPanel resultPan;
+	GroupTable groupTable;
+	JTextField textOpen2;
+	JTextField textOpen1;
+	JTextField textOpen3;
+	boolean appendData = false;
+	int lineNum = 0;
+	JFileChooser fileChooser;
+	GroupTitleController groupController;
 	ArrayList<String> checkBoxLabels = new ArrayList<>();
 	ArrayList<JCheckBox> checkBoxes = new ArrayList<>();
 
@@ -79,19 +75,27 @@ public class GUICreator extends JFrame {
 	File openFile2;
 	File openFile3;
 	boolean hasRun;
+	
+	public GUICreator() {
+	
+//	
+//	JFrame frame;
 
-	public void createGUI() {
+	
+
+
+//	public void createGUI() {
 		
-		try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (Exception e) {
-		    // If Nimbus is not available, you can set the GUI to another look and feel.
+	try {
+		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			if ("Nimbus".equals(info.getName())) {
+				UIManager.setLookAndFeel(info.getClassName());
+				break;
+			}
 		}
+	} catch (Exception e) {
+		// If Nimbus is not available, you can set the GUI to another look and feel.
+	}
 		
 		this.setTitle("M3U Master Creator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -152,7 +156,7 @@ public class GUICreator extends JFrame {
 		
 		fileChooser = new JFileChooser();
 		groupController = new GroupTitleController();
-		ChannelTable channelTable = new ChannelTable();
+		channelTable = new ChannelTable();
 
 		//creates file one label
 		JLabel lblFileOne = new JLabel("File One: ");
@@ -344,10 +348,12 @@ public class GUICreator extends JFrame {
 		groupTable.refresh();
 		System.out.println("testing from GUICreator" + GroupTitleController.getGroupTitles());
 		setVisible(true);
+		
+	
 
 		//Listener for textOpen1 button
 		btnFileOne.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {             
+			public void actionPerformed(ActionEvent text1) {             
 
 				OpenFiles of = new OpenFiles();
 				retFile = of.populateOpenFile(btnFileOne, textOpen1);
@@ -380,10 +386,10 @@ public class GUICreator extends JFrame {
 		btnAnalyze.addActionListener(new ActionListener() {	
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent text1) {
+				JOptionPane.showMessageDialog(GUICreator.this, "This process may take a while, it depends on how quickly the file downloads and is processed from your host(s). " + System.lineSeparator() + " It is recommended that you load all files in the beginning and start a new instance of the application if additional files need to be edited.");
 
-				JOptionPane.showMessageDialog(frame, "This process may take a while, it depends on how quickly the file downloads and is processed from your host(s). " + System.lineSeparator() + " It is recommended that you load all files in the beginning and start a new instance of the application if additional files need to be edited.");
-
+				
 				String fileTest = textOpen1.getText().substring(0,4);
 				if(fileTest.equals("http")){
 					readFromURL(textOpen1.getText());
@@ -408,7 +414,7 @@ public class GUICreator extends JFrame {
 				}
 
 				// displays message and then adds checkPanel to the groupPane view
-				JOptionPane.showMessageDialog(frame, "File Analysis complete. ");
+				JOptionPane.showMessageDialog(GUICreator.this, "File Analysis complete. ");
 				textOpen1.setText("");
 				textOpen2.setText("");
 				textOpen3.setText("");
@@ -439,7 +445,7 @@ public class GUICreator extends JFrame {
 //				channelTable.refresh();
 //				contentPane.repaint();
 				if(hasRun == true) {
-				JOptionPane.showMessageDialog(frame, "This application can currently only support a single application of filter(s) per run.");
+				JOptionPane.showMessageDialog(GUICreator.this, "This application can currently only support a single application of filter(s) per run.");
 				}
 				tabbedPane.setSelectedIndex(2);
 				hasRun = true;
@@ -474,10 +480,13 @@ public class GUICreator extends JFrame {
 				DonateButtonLogic.openBrowser();
 			}
 		});
+	
 	}
-
 		
 	private void readFromURL (String strVal) {
+		boolean appendData=(false);
+		int lineNum = 0;
+		
 		try 
 		{
 			URL url = new URL (strVal);
@@ -524,7 +533,7 @@ public class GUICreator extends JFrame {
 		String writeLine;
 
 		if(file.length() == 0) {
-			JOptionPane.showMessageDialog(frame, "Error file passed to mergeFiles is invalid. ");
+			JOptionPane.showMessageDialog(this, "Error file passed to mergeFiles is invalid. ");
 			return checkPanel;
 		}
 
@@ -557,7 +566,7 @@ public class GUICreator extends JFrame {
 			} 
 
 		}catch (IOException e) {
-			JOptionPane.showMessageDialog(frame, e);
+			JOptionPane.showMessageDialog(this, e);
 			e.printStackTrace();	
 		}
 		return checkPanel;
@@ -615,9 +624,7 @@ public class GUICreator extends JFrame {
 						groupTable.refresh();
 						System.out.println("test from importData Item " +  GroupTitleController.getGroupTitles());
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(GUICreator.this,
-								"Could not load data from file.", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(GUICreator.this,"Could not load data from file.", "Error",JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -654,22 +661,22 @@ public class GUICreator extends JFrame {
 		return menuBar;
 	}
 
-	public static void main(String[] args) 
-	{
-		EventQueue.invokeLater(new Runnable() 
-		{
-			public void run() 
-			{
-				try 
-				{
-					GUICreator test = new GUICreator();
-					test.createGUI();
-
-				} catch (Exception e) 
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) 
+//	{
+//		EventQueue.invokeLater(new Runnable() 
+//		{
+//			public void run() 
+//			{
+//				try 
+//				{
+//					GUICreator test = new GUICreator();
+//					test.createGUI();
+//
+//				} catch (Exception e) 
+//				{
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }
