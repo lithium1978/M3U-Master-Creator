@@ -1,7 +1,6 @@
 package lithium1978.m3uMasterCreator.backendData;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 public class GroupTitle implements Serializable, Comparable <GroupTitle> {
 	
