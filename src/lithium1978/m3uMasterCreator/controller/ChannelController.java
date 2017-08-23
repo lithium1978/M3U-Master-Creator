@@ -20,7 +20,7 @@ public class ChannelController {
 		channels = new ArrayList<Channel>();
 	}
 
-	public void addChannel(Channel channel) {
+	public static void addChannel(Channel channel) {
 		channels.add(channel);
 	}
 

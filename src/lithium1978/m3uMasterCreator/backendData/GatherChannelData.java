@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.filechooser.FileSystemView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +16,7 @@ import lithium1978.m3uMasterCreator.fileInputOutput.*;
 
 public class GatherChannelData  {
 
-	static ChannelController cd = new ChannelController();	
+//	static ChannelController cd = new ChannelController();	
 
 	String tvgID = new String();
 	String tvgName = new String();
@@ -25,6 +28,7 @@ public class GatherChannelData  {
 	String lineTwo = new String();
 	String sourceURL = new String();
 	LocalDateTime dateAdded = java.time.LocalDateTime.now();
+	String provider = new String();
 	int channelsAdded = 0;
 
 	int linesNeeded = 0;
@@ -54,7 +58,7 @@ public class GatherChannelData  {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void getData(String line, String line2) {
 		String [] matchCriteria = {"tvg-id=\"", "tvg-name=\"", "tvg-logo=\"", "group-title=\"","\","};
 		int matchLookup = 0;
@@ -83,6 +87,12 @@ public class GatherChannelData  {
 					str = "";
 				}
 
+				int providerLoc = StringUtils.ordinalIndexOf(line2, ":", 1) + 3;
+				int providerLoc2 = StringUtils.ordinalIndexOf(line2, ":",  2);
+				
+				provider = line2.substring(providerLoc, providerLoc2);
+				
+				
 				str = line.substring(loc, loc2);  //pulls value of the group-title field and assigns to str
 				String cleaned = str.replaceAll("\"", "");
 
@@ -100,8 +110,15 @@ public class GatherChannelData  {
 				String lineOne = line;
 				String lineTwo = line2;
 				String sourceURL = line2;
-				Channel channel = new Channel(tvgID, tvgName, tvgCustomName, tvgLogo, groupTitle, isIncluded, dateAdded, lineOne, lineTwo, sourceURL);
-				cd.addChannel(channel);
+				Channel channel = new Channel(tvgID, tvgName, tvgCustomName, tvgLogo, groupTitle, isIncluded, dateAdded, lineOne, lineTwo, sourceURL, provider);
+//				System.out.println("Testing from Gather Channel " + ChannelController.getChannels());
+				List<Channel> chanList = new ArrayList<>();
+				chanList = ChannelController.getChannels();
+				
+				//				cd.addChannel(channel);
+				if(!chanList.contains(channel)) {
+					ChannelController.addChannel(channel);
+				}
 				channelsAdded++;
 				break;	
 				}
@@ -111,5 +128,7 @@ public class GatherChannelData  {
 		linesNeeded = 1;
 
 	} // end getData
+
+		
 }
 

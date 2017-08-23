@@ -309,31 +309,14 @@ public class GUICreator extends JFrame {
 	      textOpen1.setComponentPopupMenu(popup);
 	      textOpen2.setComponentPopupMenu(popup);
 	      textOpen3.setComponentPopupMenu(popup);
-//		//creates Load Button
-//		Icon loadIcon = new ImageIcon("src/images/icons8-Open-40.png");
-//		JButton btnLoad = new JButton(loadIcon);
-//		btnLoad.setVerticalAlignment(SwingConstants.BOTTOM);
-//		GridBagConstraints gbc_btnLoad = new GridBagConstraints();
-//		gbc_btnLoad.anchor= GridBagConstraints.SOUTHWEST;
-//		gbc_btnLoad.insets = new Insets(0,0,0,0);
-//		gbc_btnLoad.gridx=1;
-//		gbc_btnLoad.gridy=3;
-//		ioPanel.add(btnLoad, gbc_btnLoad);
-//		
-//		//creates Save Button
-//		Icon saveIcon = new ImageIcon("src/images/icons8-Save-40.png");
-//		JButton btnSaveSettings = new JButton(saveIcon);
-//		btnLoad.setVerticalAlignment(SwingConstants.BOTTOM);
-//		GridBagConstraints gbc_btnSaveSettings = new GridBagConstraints();
-//		gbc_btnSaveSettings.anchor= GridBagConstraints.SOUTHWEST;
-//		gbc_btnSaveSettings.insets = new Insets(0,0,0,0);
-//		gbc_btnSaveSettings.gridx=1;
-//		gbc_btnSaveSettings.gridy=4;
-//		ioPanel.add(btnSaveSettings, gbc_btnSaveSettings);
+
+		setJMenuBar(createMenuBar());
 		
 
-//		this.pack();
-		setJMenuBar(createMenuBar());
+		groupTable = new GroupTable();
+		tabbedPane.addTab("Group-Title Replacements", null, groupTable, null);
+		groupTable.setData(GroupTitleController.getGroupTitles());
+		System.out.println("testing from GUICreator" + GroupTitleController.getGroupTitles());
 		
 		try {
 			File groupAutoSaveData = new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/AutoSave_GTData.gfd");
@@ -341,12 +324,14 @@ public class GUICreator extends JFrame {
 				 
 		}catch (IOException e2) {
 			FileLogger.logData(LocalDateTime.now() + "GroupTitle autosave data not found" );
-		}
-		groupTable = new GroupTable();
-		tabbedPane.addTab("Group-Title Replacements", null, groupTable, null);
-		groupTable.setData(GroupTitleController.getGroupTitles());
+		}	
+
 		groupTable.refresh();
-		System.out.println("testing from GUICreator" + GroupTitleController.getGroupTitles());
+		
+		tabbedPane.addTab("Channel Filters", null,channelTable, null);
+		channelTable.setData(ChannelController.getChannels());
+		channelTable.refresh();
+		
 		setVisible(true);
 		
 	
@@ -435,26 +420,16 @@ public class GUICreator extends JFrame {
 //				GatherChannelData.getChannels();
 				if(hasRun != true) {
 					WriteTempFile.checkBoxStatus(checkBoxes, checkBoxLabels);
-					tabbedPane.addTab("Channel Filters", null,channelTable, null);
+//					tabbedPane.addTab("Channel Filters", null,channelTable, null);
 					channelTable.setData(ChannelController.getChannels());
 					channelTable.refresh();
 				}
-//				ChannelTable channelTable = new ChannelTable();
-//				tabbedPane.addTab("Channel Filters", null,channelTable, null);
-//				channelTable.setData(ChannelController.getChannels());
-//				channelTable.refresh();
-//				contentPane.repaint();
+
 				if(hasRun == true) {
 				JOptionPane.showMessageDialog(GUICreator.this, "This application can currently only support a single application of filter(s) per run.");
 				}
 				tabbedPane.setSelectedIndex(2);
 				hasRun = true;
-
-//				groupTable.setData(GroupTitleController.getGroupTitles());
-//				List<GroupTitle> values = new ArrayList<>();
-//				values = GroupTitleController.getGroupTitles();
-//				System.out.println("Test from GUI " + GroupTitleController.getGroupTitles());
-//				System.out.println("test copying to new array " +  values);
 			}
 		});
 		

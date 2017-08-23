@@ -11,16 +11,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
+
 
 import lithium1978.m3uMasterCreator.backendData.*;
+import lithium1978.m3uMasterCreator.controller.GroupTitleController;
 import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
 import lithium1978.m3uMasterCreator.model.GroupTitleTableModel;
 
@@ -34,9 +42,14 @@ public class GroupTable extends JPanel implements ActionListener{
 	private JPopupMenu popup;
 	private JMenuItem copyItem;
 	private JMenuItem pasteItem;
+	private JFileChooser fileChooser;
+	private GroupTitleController groupController;
+	
 
 	public GroupTable() {
 
+		fileChooser = new JFileChooser();
+		groupController = new GroupTitleController();
 		groupModel = new GroupTitleTableModel();
 		groupTable = new JTable(groupModel);
 		popup = new JPopupMenu();
@@ -60,17 +73,56 @@ public class GroupTable extends JPanel implements ActionListener{
 				}
 			}
 		});
+		
+		JToolBar toolbar = new JToolBar();
+		
+		JButton btnSave = new JButton("Save");
+		toolbar.add(btnSave);
+		JButton btnLoad = new JButton("Load");
+		toolbar.add(btnLoad);
 
 		setLayout (new BorderLayout());
-
+		add(toolbar, BorderLayout.PAGE_START);
 		add(new JScrollPane(groupTable), BorderLayout.CENTER);
 		groupTable.setAutoCreateRowSorter(true);
+		
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent btnSave) {
+
+				if (fileChooser.showSaveDialog(GroupTable.this) == JFileChooser.APPROVE_OPTION) {
+					try {
+						groupController.saveToFile(fileChooser.getSelectedFile());
+						JOptionPane.showMessageDialog(GroupTable.this, "File save complete");
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(GroupTable.this,
+								"Could not save data to file.", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent btnLoad) {
+
+				if (fileChooser.showOpenDialog(GroupTable.this) == JFileChooser.APPROVE_OPTION) {
+					try {
+						groupController.loadFromFile(fileChooser.getSelectedFile());
+						refresh();
+						System.out.println("test from importData Item " +  GroupTitleController.getGroupTitles());
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(GroupTable.this,"Could not load data from file.", "Error",JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 	}	
 
 
 
 
 	public void setData(List<GroupTitle> groups) {
+		Collections.sort(groups);
 		groupModel.setData(groups);
 	}
 
@@ -120,6 +172,7 @@ public class GroupTable extends JPanel implements ActionListener{
 			e.printStackTrace();
 		}//try
 	}//onPaste
-
+	
+	
 }
 

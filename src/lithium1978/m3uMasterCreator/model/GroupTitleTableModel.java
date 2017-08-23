@@ -1,5 +1,6 @@
 package lithium1978.m3uMasterCreator.model;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -31,6 +32,7 @@ public class GroupTitleTableModel extends AbstractTableModel {
 		if(groups == null) {
 			return;
 		}
+		Collections.sort(groups);
 		this.groups = groups;
 	}
 

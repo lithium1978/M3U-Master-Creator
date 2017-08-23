@@ -53,7 +53,7 @@ public class GroupTitleController {
 			groupTitles.clear();
 
 			groupTitles.addAll(Arrays.asList(groupList));
-			System.out.println("test from load file " + getGroupTitles());
+			System.out.println("test from controller load file " + getGroupTitles());
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
