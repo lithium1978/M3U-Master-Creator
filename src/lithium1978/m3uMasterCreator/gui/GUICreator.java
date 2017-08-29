@@ -355,7 +355,7 @@ public class GUICreator extends JFrame {
 		btnFileTwo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {             
 				OpenFiles of = new OpenFiles();
-				retFile = of.populateOpenFile(btnFileOne, textOpen1);
+				retFile = of.populateOpenFile(btnFileTwo, textOpen2);
 				textOpen2.setText(retFile.getAbsolutePath());
 				openFile2 = retFile;
 			}
@@ -365,7 +365,7 @@ public class GUICreator extends JFrame {
 		btnFileThree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {             
 				OpenFiles of = new OpenFiles();
-				retFile = of.populateOpenFile(btnFileOne, textOpen1);
+				retFile = of.populateOpenFile(btnFileThree, textOpen3);
 				textOpen3.setText(retFile.getAbsolutePath());
 				openFile3 = retFile;
 			}
@@ -467,8 +467,6 @@ public class GUICreator extends JFrame {
 	}
 		
 	private void readFromURL (String strVal) {
-		boolean appendData=(false);
-		int lineNum = 0;
 		
 		try 
 		{
@@ -643,23 +641,4 @@ public class GUICreator extends JFrame {
 
 		return menuBar;
 	}
-
-//	public static void main(String[] args) 
-//	{
-//		EventQueue.invokeLater(new Runnable() 
-//		{
-//			public void run() 
-//			{
-//				try 
-//				{
-//					GUICreator test = new GUICreator();
-//					test.createGUI();
-//
-//				} catch (Exception e) 
-//				{
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 }
