@@ -74,7 +74,10 @@ public class ChannelTableModel extends AbstractTableModel {
 		case 5:
 			return channel.getTvgLogo();
 		case 6:
-			return channel.getGroupReplacementTitle();
+			if(channel.getGroupReplacementTitle() != "") {
+				return channel.getGroupReplacementTitle();
+			}
+			return channel.getGroupTitle();
 		case 7:
 			return channel.getSourceURL();
 		}
