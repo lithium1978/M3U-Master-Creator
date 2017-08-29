@@ -8,13 +8,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lithium1978.m3uMasterCreator.backendData.*;
+import lithium1978.m3uMasterCreator.database.Database;
+import lithium1978.m3uMasterCreator.fileInputOutput.WriteTempFile;
 
 public class ChannelController {
 
-	private static ArrayList<Channel> channels;
+	private static List<Channel> channels;
 
 	public ChannelController() {
 		channels = new ArrayList<Channel>();
@@ -30,6 +33,27 @@ public class ChannelController {
 	
 	public static void clearChannels() {
 		channels.clear();
+	}
+	
+	public static void loadToDb(){
+		Database db = new Database();
+		try {
+			db.insertChannels(ChannelController.getChannels());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateDB() {
+		Database db = new Database();
+		db.updateChannels(ChannelController.getChannels());
+	}
+	
+	public static List<Channel> pullFromDB() {
+		Database db = new Database();
+		channels = db.loadChannels(WriteTempFile.getSelectedCriteria(), ChannelController.getChannels());
+		return channels;
 	}
 
 	public void saveToFile(File file) throws IOException {

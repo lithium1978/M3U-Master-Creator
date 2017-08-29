@@ -9,19 +9,23 @@ public class Channel implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2856176905549154671L;
-	private String tvgID, tvgName, tvgLogo, groupTitle, lineOne, lineTwo, sourceURL, tvgCustomName, provider;
+	private String tvgID, tvgName, tvgLogo, groupTitle, lineOne, lineTwo, sourceURL, tvgCustomName, provider, channelName, groupReplacementTitle;
+	
+
 	private boolean isIncluded;
 	private	LocalDateTime dateAdded;
 
 
-	public Channel (String tvgID, String tvgName, String tvgCustomName, String tvgLogo, String groupTitle, 
+	public Channel (String channelName, String tvgID, String tvgName, String tvgCustomName, String tvgLogo, String groupTitle, String groupReplacementTitle, 
 			boolean isIncluded, LocalDateTime dateAdded, String lineOne, String lineTwo, String sourceURL, String provider) {
 
+		this.channelName= channelName;
 		this.tvgID = tvgID;
 		this.tvgName = tvgName;
 		this.tvgCustomName= tvgCustomName;
 		this.tvgLogo = tvgLogo;
 		this.groupTitle = groupTitle;
+		this.groupReplacementTitle = groupReplacementTitle;
 		this.isIncluded = isIncluded;
 		this.dateAdded = dateAdded;
 		this.lineOne = lineOne;
@@ -31,6 +35,21 @@ public class Channel implements Serializable {
 
 	}
 
+	public String getGroupReplacementTitle() {
+		return groupReplacementTitle;
+	}
+
+	public void setGroupReplacementTitle(String groupReplacementTitle) {
+		this.groupReplacementTitle = groupReplacementTitle;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
 
 	public String getProvider() {
 		return provider;
@@ -40,7 +59,7 @@ public class Channel implements Serializable {
 		this.provider = provider;
 	}
 
-	public Object getTvgCustomName() {
+	public String getTvgCustomName() {
 		return tvgCustomName;
 	}
 

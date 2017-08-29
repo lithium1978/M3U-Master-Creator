@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.filechooser.FileSystemView;
 
@@ -16,12 +18,19 @@ import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
 
 
 public class CheckBoxArray {
+	
+	static GroupTitleController gtc;
 	static int testIndex = 0;
 	static ArrayList<String> groupIDs = new ArrayList<>();
 	static ArrayList<String> importedIDs = new ArrayList<>();
-
+	static ArrayList<String> currentIDs = new ArrayList<>();
+	
 	public static List<String> getGroupIDs() {
 		return groupIDs;
+	}
+	public static List<String> getCurrentIDs(){
+		Collections.sort(currentIDs);
+		return currentIDs;
 	}
 		
 //	static GroupTitleController controller = new GroupTitleController();
@@ -30,7 +39,7 @@ public class CheckBoxArray {
 	private static void processLine(String line) {
 		
 		
-
+//		gtc = new GroupTitleController();
 		String match = "group-title=";
 		String match2 = "\",";
 
@@ -46,8 +55,9 @@ public class CheckBoxArray {
 				String str = "";
 				addLineToArray(str);				
 			}
-
+			Map<String, String> groups = new HashMap<>();
 			String str = line.substring(loc, loc2);  //pulls value of the group-title field and assigns to str
+//			gtc.loadToDb(str, null);
 			addLineToArray(str);  
 		}
 		testIndex++;
@@ -58,12 +68,16 @@ public class CheckBoxArray {
 		
 
 		if(groupIDs.contains(value)) {
+			if(!currentIDs.contains(value)) {
+			currentIDs.add(value);
+			}
 			return;
 		}
 		GroupTitle gt = new GroupTitle(value, null);
 		GroupTitleController.addGroupTitle(gt);
-//		System.out.println("Testing from within CheckBoxArray " + GroupTitleController.getGroupTitles());
+	//	System.out.println("Testing from within CheckBoxArray " + GroupTitleController.getGroupTitles());
 		groupIDs.add(value);
+		currentIDs.add(value);
 	}  // end addLineToArray
 
 	public static ArrayList<String> analyzeFile() 
@@ -71,7 +85,6 @@ public class CheckBoxArray {
 //		System.out.println("test from ArrayList " + GroupTitleController.getGroupTitles());
 		UpdateGroupTitleArray update = new UpdateGroupTitleArray();
 		importedIDs = update.updateArray();
-		
 		if (importedIDs.size() > 0) {
 			groupIDs = importedIDs;
 		}
@@ -90,6 +103,7 @@ public class CheckBoxArray {
 		//sorts groupIDs arrayList in alpha order
 		Collections.sort(groupIDs);
 		return groupIDs;
+
 
 
 

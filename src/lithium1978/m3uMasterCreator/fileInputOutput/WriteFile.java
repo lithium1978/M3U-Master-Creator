@@ -46,6 +46,7 @@ public class WriteFile {
 				saveFile.createNewFile();  				
 			}
 			FileLogger.logData(LocalDateTime.now() + " Data saved to file " + saveFile + System.lineSeparator()); 			 
+			System.out.println("testing selectedValues " + selectedValues.size() + " testing linesToWrite " + linesToWrite.size());
 			finalProcessing(fc.getSelectedFile(), selectedValues, linesToWrite);   
 
 		}catch(IOException ioe){
@@ -78,7 +79,12 @@ public class WriteFile {
 						writeIndex ++;
 					}else {
 //						String filter = selectedValues.get(criteriaCount);
+						System.out.println("print criteria Count number" + criteriaCount);
+						System.out.println("Lines To Write test " + linesToWrite);
+						System.out.println("write index " + writeIndex);
+						System.out.println("lineToWrite " + linesToWrite.get(criteriaCount));
 						String lineToWrite = linesToWrite.get(criteriaCount);
+						System.out.println("Line to Write values " + lineToWrite);
 //						String filter3 = updatedGroupTitles.get(criteriaCount);
 						
 						if(selectedValues.get(criteriaCount).equals("skip channel")){
@@ -92,18 +98,6 @@ public class WriteFile {
 							} else {
 								writeLine = lineToWrite;
 								
-//								if(filter.equals("tvg-name=\"")) {
-//									filter = "No Name";}	
-//								int loc = writeLine.indexOf("tvg-name=\"");
-//								int loclength= "tvg-name=\"".length();
-//								int loc2 = writeLine.indexOf("tvg-logo=\"");
-//
-//								loc2 = loc2-2;		
-//								loc = loc + loclength;
-//
-//								String newVal = writeLine.substring(loc, loc2);		
-//								String updateWriteLine = writeLine.replaceFirst(newVal, filter);
-
 								bw.write(writeLine);
 								bw.newLine();
 								writeStat = true;
@@ -117,7 +111,9 @@ public class WriteFile {
 			}// end while
 			
 		} catch (IOException e) {
+			JFrame newFrame = new JFrame();
 			JOptionPane.showMessageDialog(frame, e);
+			JOptionPane.showMessageDialog(newFrame, "File write complete. " + (writeIndex/2) + " Lines written to new file.");
 			e.printStackTrace();
 		}
 		JOptionPane.showMessageDialog(frame, "File write complete. " + (writeIndex/2) + " Lines written to new file.");

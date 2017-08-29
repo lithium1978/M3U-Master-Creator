@@ -18,6 +18,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -46,6 +48,7 @@ import javax.swing.JTabbedPane;
 
 import lithium1978.m3uMasterCreator.backendData.*;
 import lithium1978.m3uMasterCreator.controller.*;
+import lithium1978.m3uMasterCreator.database.Database;
 import lithium1978.m3uMasterCreator.fileInputOutput.FileLogger;
 import lithium1978.m3uMasterCreator.fileInputOutput.OpenFiles;
 import lithium1978.m3uMasterCreator.fileInputOutput.WriteTempFile;
@@ -315,17 +318,18 @@ public class GUICreator extends JFrame {
 
 		groupTable = new GroupTable();
 		tabbedPane.addTab("Group-Title Replacements", null, groupTable, null);
-		groupTable.setData(GroupTitleController.getGroupTitles());
+//		groupTable.setData(GroupTitleController.getGroupTitles());
+		groupTable.setData(GroupTitleController.pullFromDB());
 		System.out.println("testing from GUICreator" + GroupTitleController.getGroupTitles());
-		
-		try {
-			File groupAutoSaveData = new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/AutoSave_GTData.gfd");
-			groupController.loadFromFile(groupAutoSaveData);
-				 
-		}catch (IOException e2) {
-			FileLogger.logData(LocalDateTime.now() + "GroupTitle autosave data not found" );
-		}	
-
+				
+//		try {
+//			File groupAutoSaveData = new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/AutoSave_GTData.gfd");
+//			groupController.loadFromFile(groupAutoSaveData);
+//				 
+//		}catch (IOException e2) {
+//			FileLogger.logData(LocalDateTime.now() + "GroupTitle autosave data not found" );
+//		}	
+//
 		groupTable.refresh();
 		
 		tabbedPane.addTab("Channel Filters", null,channelTable, null);
@@ -405,10 +409,13 @@ public class GUICreator extends JFrame {
 				textOpen3.setText("");
 				
 				CheckBoxArray.analyzeFile();
+				groupController.loadToDb();
 				JPanel checkPanel = createCheckBoxes();
 				groupPane.setViewportView(checkPanel);
 				contentPane.validate();
 				contentPane.repaint();
+				groupTable.setData(GroupTitleController.pullFromDB());
+				groupTable.refresh();
 			}
 		});
 
@@ -421,7 +428,8 @@ public class GUICreator extends JFrame {
 				if(hasRun != true) {
 					WriteTempFile.checkBoxStatus(checkBoxes, checkBoxLabels);
 //					tabbedPane.addTab("Channel Filters", null,channelTable, null);
-					channelTable.setData(ChannelController.getChannels());
+					ChannelController.loadToDb();
+					channelTable.setData(ChannelController.pullFromDB());
 					channelTable.refresh();
 				}
 
@@ -551,10 +559,10 @@ public class GUICreator extends JFrame {
 
 		JPanel checkBoxP = new JPanel(new GridLayout(60,4));
 
-		String labels[]=CheckBoxArray.getGroupIDs().toArray(new String[CheckBoxArray.getGroupIDs().size()]);   
+		String labels[]=CheckBoxArray.getCurrentIDs().toArray(new String[CheckBoxArray.getGroupIDs().size()]);   
 
 
-		for (int i = 0; i < CheckBoxArray.getGroupIDs().size(); i++) {
+		for (int i = 0; i < CheckBoxArray.getCurrentIDs().size(); i++) {
 
 			//creates Jcheckbox with title from getGroupIDs arraylist.  
 			JCheckBox checkbox = new JCheckBox(labels[i],false);   
@@ -563,7 +571,7 @@ public class GUICreator extends JFrame {
 			String str = checkbox.getText();
 			checkBoxLabels.add(str);
 			checkBoxes.add(chbx);
-
+			
 		} //end for loop
 
 		return checkBoxP;

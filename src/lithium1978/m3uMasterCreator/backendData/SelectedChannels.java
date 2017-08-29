@@ -14,11 +14,9 @@ public class SelectedChannels {
 
 	private List<Channel> cd;
 	private List <GroupTitle> gt;
-	
-//	private checkBoxArray cba;
+	Map<String, String> groupTitleVals;
+
 	ArrayList <String> selectedChannels = new ArrayList<>();
-//	ArrayList <String> updatedTvgIDs = new ArrayList<>();
-//	ArrayList <String> updatedGroupTitles = new ArrayList<>();
 	ArrayList <String> updatedWriteLines = new ArrayList<>();
 	
 	public void getData() {
@@ -27,7 +25,7 @@ public class SelectedChannels {
 		
 		GroupTitleTableModel gtm = new GroupTitleTableModel();
 		gtm.setData(gt);
-		Map<String, String> groupTitleVals = new HashMap<>();
+		groupTitleVals = new HashMap<>();
 		String replacementVal = new String();
 		String replacementVal2= new String();
 		for(int z = 0; z < gt.size(); z++) {
@@ -53,6 +51,7 @@ public class SelectedChannels {
 				String tvgCustomName = (String) channel.getTvgCustomName();
 				String tvgLogo = (String) channel.getTvgLogo();
 				String groupTitle = (String) channel.getGroupTitle();
+				String channelName = (String) channel.getChannelName();
 				
 				if(groupTitleVals.containsKey(groupTitle)) {
 					String replacementTitle = groupTitleVals.get(groupTitle);
@@ -65,7 +64,7 @@ public class SelectedChannels {
 //				updatedTvgIDs.add(str2);
 //				updatedGroupTitles.add(str3);
 				//			System.out.println(selectedChannels);
-				String writeUpdatedLine = "#EXTINF:-1 tvg-id=\"" +tvgID+ "\" tvg-name=\""+ tvgCustomName + "\" tvg-logo=\"" + tvgLogo +"\" group-title=\"" + groupTitle + "\"," + tvgCustomName;
+				String writeUpdatedLine = "#EXTINF:-1 tvg-id=\"" +tvgID+ "\" tvg-name=\""+ tvgCustomName + "\" tvg-logo=\"" + tvgLogo +"\" group-title=\"" + groupTitle + "\"," + channelName;
 				updatedWriteLines.add(writeUpdatedLine);
 			}else {
 				if(channel.getIsIncluded()== false) {
@@ -87,6 +86,21 @@ public class SelectedChannels {
 //		System.out.println(cd.size());
 
 
+	}
+
+	public Map<String, String> getGroupTitleVals() {
+		groupTitleVals = new HashMap<>();
+		GroupTitleTableModel gtm = new GroupTitleTableModel();
+		gtm.setData(GroupTitleController.getGroupTitles());
+		String replacementVal = new String();
+		String replacementVal2= new String();
+		for(int z = 0; z < GroupTitleController.getGroupTitles().size(); z++) {
+			replacementVal = (String) gtm.getValueAt(z, 0);
+			replacementVal2 = (String) gtm.getValueAt(z, 1);
+			
+			groupTitleVals.put(replacementVal, replacementVal2);
+		}
+		return groupTitleVals;
 	}
 }
 

@@ -32,8 +32,8 @@ public class GroupTitleTableModel extends AbstractTableModel {
 		if(groups == null) {
 			return;
 		}
-		Collections.sort(groups);
 		this.groups = groups;
+		Collections.sort(groups);
 	}
 
 	@Override

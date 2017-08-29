@@ -74,6 +74,8 @@ public class GatherChannelData  {
 				int locLength = matchCriteria[matchLookup].length();
 				matchLookup++;
 				int loc2 = StringUtils.indexOfIgnoreCase(line, matchCriteria[matchLookup]);
+				
+				String chanInfo = line.substring(line.lastIndexOf(',')+1);
 
 				if(matchLookup == 4) {
 				} else {
@@ -110,7 +112,8 @@ public class GatherChannelData  {
 				String lineOne = line;
 				String lineTwo = line2;
 				String sourceURL = line2;
-				Channel channel = new Channel(tvgID, tvgName, tvgCustomName, tvgLogo, groupTitle, isIncluded, dateAdded, lineOne, lineTwo, sourceURL, provider);
+				String groupReplacementTitle = "";
+				Channel channel = new Channel(chanInfo, tvgID, tvgName, tvgCustomName, tvgLogo, groupTitle, groupReplacementTitle, isIncluded, dateAdded, lineOne, lineTwo, sourceURL, provider);
 //				System.out.println("Testing from Gather Channel " + ChannelController.getChannels());
 				List<Channel> chanList = new ArrayList<>();
 				chanList = ChannelController.getChannels();

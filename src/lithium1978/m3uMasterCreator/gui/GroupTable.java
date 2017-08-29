@@ -1,6 +1,5 @@
 package lithium1978.m3uMasterCreator.gui;
 
-
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -11,15 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -42,13 +37,11 @@ public class GroupTable extends JPanel implements ActionListener{
 	private JPopupMenu popup;
 	private JMenuItem copyItem;
 	private JMenuItem pasteItem;
-	private JFileChooser fileChooser;
 	private GroupTitleController groupController;
 	
 
 	public GroupTable() {
 
-		fileChooser = new JFileChooser();
 		groupController = new GroupTitleController();
 		groupModel = new GroupTitleTableModel();
 		groupTable = new JTable(groupModel);
@@ -78,8 +71,8 @@ public class GroupTable extends JPanel implements ActionListener{
 		
 		JButton btnSave = new JButton("Save");
 		toolbar.add(btnSave);
-		JButton btnLoad = new JButton("Load");
-		toolbar.add(btnLoad);
+//		JButton btnLoad = new JButton("Load");
+//		toolbar.add(btnLoad);
 
 		setLayout (new BorderLayout());
 		add(toolbar, BorderLayout.PAGE_START);
@@ -88,36 +81,38 @@ public class GroupTable extends JPanel implements ActionListener{
 		
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent btnSave) {
+				
+				groupController.updateDB();
 
-				if (fileChooser.showSaveDialog(GroupTable.this) == JFileChooser.APPROVE_OPTION) {
-					try {
-						groupController.saveToFile(fileChooser.getSelectedFile());
-						JOptionPane.showMessageDialog(GroupTable.this, "File save complete");
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(GroupTable.this,
-								"Could not save data to file.", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
+//				if (fileChooser.showSaveDialog(GroupTable.this) == JFileChooser.APPROVE_OPTION) {
+//					try {
+//						groupController.saveToFile(fileChooser.getSelectedFile());
+//						JOptionPane.showMessageDialog(GroupTable.this, "File save complete");
+//					} catch (IOException e1) {
+//						JOptionPane.showMessageDialog(GroupTable.this,
+//								"Could not save data to file.", "Error",
+//								JOptionPane.ERROR_MESSAGE);
+//					}
+//				}
 			}
 		});
+	}
 		
-		btnLoad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent btnLoad) {
-
-				if (fileChooser.showOpenDialog(GroupTable.this) == JFileChooser.APPROVE_OPTION) {
-					try {
-						groupController.loadFromFile(fileChooser.getSelectedFile());
-						refresh();
-						System.out.println("test from importData Item " +  GroupTitleController.getGroupTitles());
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(GroupTable.this,"Could not load data from file.", "Error",JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
-		});
-	}	
-
+//		btnLoad.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent btnLoad) {
+//
+//				if (fileChooser.showOpenDialog(GroupTable.this) == JFileChooser.APPROVE_OPTION) {
+//					try {
+//						groupController.loadFromFile(fileChooser.getSelectedFile());
+//						refresh();
+//						System.out.println("test from importData Item " +  GroupTitleController.getGroupTitles());
+//					} catch (IOException e1) {
+//						JOptionPane.showMessageDialog(GroupTable.this,"Could not load data from file.", "Error",JOptionPane.ERROR_MESSAGE);
+//					}
+//				}
+//			}
+//		});
+	
 
 
 

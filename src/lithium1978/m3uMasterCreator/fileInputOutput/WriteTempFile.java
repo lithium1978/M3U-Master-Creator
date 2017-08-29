@@ -27,6 +27,10 @@ public class WriteTempFile {
 	static int writeIndex = 0;
 	static int criteriaCount = 0;
 
+	public static ArrayList<String> getSelectedCriteria() {
+		return selectedCriteria;
+	}
+
 	public static void checkBoxStatus (ArrayList<JCheckBox> checkBoxes2, ArrayList<String> checkBoxLab) {
 
 		for(int i = 0; i< checkBoxes2.size(); i++) {
@@ -92,7 +96,7 @@ public class WriteTempFile {
 					}
 				}
 				for(int c = 0; c < selectedCriteria.size(); c++){
-					String filter = "group-title=\"" + selectedCriteria.get(c);
+					String filter = "group-title=\"" + selectedCriteria.get(c)+ "\"";
 					if(filter.equals("group-title=\"")){
 						filter = "group-title=\"\"";							
 					}

@@ -8,13 +8,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lithium1978.m3uMasterCreator.backendData.*;
+import lithium1978.m3uMasterCreator.database.Database;
 
 public class GroupTitleController {
 	
-	private static ArrayList<GroupTitle> groupTitles;
+	private static List<GroupTitle> groupTitles;
 
 	public GroupTitleController() {
 		groupTitles = new ArrayList<GroupTitle>();
@@ -32,6 +34,27 @@ public class GroupTitleController {
 		groupTitles.clear();
 	}
 
+	public void loadToDb(){
+		Database db = new Database();
+		db.insertGroups(GroupTitleController.getGroupTitles());
+	}
+	
+	public void updateDB() {
+		Database db = new Database();
+		db.updateGroups(GroupTitleController.getGroupTitles());
+	}
+	
+	public static List<GroupTitle> pullFromDB() {
+		Database db = new Database();
+		groupTitles = db.loadGroups();
+		Collections.sort(groupTitles);
+		return groupTitles;
+	}
+	
+	public List<GroupTitle> getGroupData(){
+		Database db = new Database();
+		return db.loadGroups();
+	}
 	public void saveToFile(File file) throws IOException {
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);

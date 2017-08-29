@@ -17,7 +17,7 @@ public class ChannelTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Channel> cd;
-	private String[] colNames = {"Enabled", "Date Added", "Tvg-ID", "Tvg-Name", "Tvg-Logo", "Group Title", "Source"};
+	private String[] colNames = {"Enabled", "Channel Name", "Date Added", "Tvg-ID", "Tvg-Name", "Tvg-Logo", "Group Title", "Source"};
 	public ChannelTableModel() {
 
 	}
@@ -39,7 +39,7 @@ public class ChannelTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 7;
+		return 8;
 	}
 
 	@Override
@@ -64,16 +64,18 @@ public class ChannelTableModel extends AbstractTableModel {
 		case 0:
 			return channel.getIsIncluded();
 		case 1:
-			return channel.getDateAdded();
+			return channel.getChannelName();
 		case 2:
-			return channel.getTvgID();
+			return channel.getDateAdded();
 		case 3:
-			return channel.getTvgCustomName();
+			return channel.getTvgID();
 		case 4:
-			return channel.getTvgLogo();
+			return channel.getTvgCustomName();
 		case 5:
-			return channel.getGroupTitle();
+			return channel.getTvgLogo();
 		case 6:
+			return channel.getGroupReplacementTitle();
+		case 7:
 			return channel.getSourceURL();
 		}
 
@@ -86,32 +88,36 @@ public class ChannelTableModel extends AbstractTableModel {
 		Channel channel = cd.get(row);
 		if (col==0)
 			channel.setIsIncluded((Boolean)value);
-		else if (col==2)
-			channel.setTvgID((String)value);
+		else if (col==1)
+			channel.setChannelName((String)value);
 		else if (col==3)
-			channel.setTvgCustomName((String)value);
+			channel.setTvgID((String)value);
 		else if (col==4)
-			channel.setTvgLogo((String)value);
+			channel.setTvgCustomName((String)value);
 		else if (col==5)
-			channel.setGroupTitle((String)value);
+			channel.setTvgLogo((String)value);
+		else if (col==6)
+			channel.setGroupReplacementTitle((String)value);
 		fireTableCellUpdated(row,col);
 	}
 
 	public Class<?> getColumnClass (int column) {
 		switch (column) {
 		case 0: return Boolean.class;
+		
+		case 1: return String.class;
 
-		case 1: return LocalDateTime.class;
+		case 2: return LocalDateTime.class;
 
-		case 2: return String.class;
+		case 3: return String.class;
 
-		case 3:  return String.class;
-
-		case 4: return String.class;
+		case 4:  return String.class;
 
 		case 5: return String.class;
 
 		case 6: return String.class;
+
+		case 7: return String.class;
 
 		default: return String.class;
 		}
@@ -122,11 +128,12 @@ public class ChannelTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int row, int col) {
 		switch (col) {
 		case 0: return true;
-		case 1: return false;
-		case 2: return true;
+		case 1: return true;
+		case 2: return false;
 		case 3: return true;
 		case 4: return true;
 		case 5: return true;
+		case 6: return true;
 		default:
 			return false;
 		}  

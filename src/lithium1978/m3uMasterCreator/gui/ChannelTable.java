@@ -82,8 +82,8 @@ public class ChannelTable extends JPanel implements ActionListener {
 		
 		JButton btnChanSave = new JButton("Save");
 		toolbar.add(btnChanSave);
-		JButton btnChanLoad = new JButton("Load");
-		toolbar.add(btnChanLoad);
+//		JButton btnChanLoad = new JButton("Load");
+//		toolbar.add(btnChanLoad);
 
 		setLayout (new BorderLayout());
 		add(toolbar, BorderLayout.PAGE_START);
@@ -94,10 +94,10 @@ public class ChannelTable extends JPanel implements ActionListener {
 		table.setRowSorter(sorter);
 		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 					
-		int columnIndexForGroupTitle = 5;
+		int columnIndexForGroupTitle = 6;
 		sortKeys.add(new RowSorter.SortKey(columnIndexForGroupTitle, SortOrder.ASCENDING));
 		 
-		int columnIndexForTvgName = 3;
+		int columnIndexForTvgName = 2;
 		sortKeys.add(new RowSorter.SortKey(columnIndexForTvgName, SortOrder.ASCENDING));
 		
 		sorter.setSortKeys(sortKeys);
@@ -105,36 +105,38 @@ public class ChannelTable extends JPanel implements ActionListener {
 		
 		btnChanSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent btnChanSave) {
+				
+				channelController.updateDB();
 
-				if (fileChooser.showSaveDialog(ChannelTable.this) == JFileChooser.APPROVE_OPTION) {
-					try {
-						channelController.saveToFile(fileChooser.getSelectedFile());
-						JOptionPane.showMessageDialog(ChannelTable.this, "File save complete");
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(ChannelTable.this,
-								"Could not save data to file.", "Error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
+//				if (fileChooser.showSaveDialog(ChannelTable.this) == JFileChooser.APPROVE_OPTION) {
+//					try {
+//						channelController.saveToFile(fileChooser.getSelectedFile());
+//						JOptionPane.showMessageDialog(ChannelTable.this, "File save complete");
+//					} catch (IOException e1) {
+//						JOptionPane.showMessageDialog(ChannelTable.this,
+//								"Could not save data to file.", "Error",
+//								JOptionPane.ERROR_MESSAGE);
+//					}
+//				}
 			}
 		});
-		
-		btnChanLoad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent btnChanLoad) {
-
-				if (fileChooser.showOpenDialog(ChannelTable.this) == JFileChooser.APPROVE_OPTION) {
-					try {
-						channelController.loadFromFile(fileChooser.getSelectedFile());
-						refresh();
-						System.out.println("test from importData Item " +  ChannelController.getChannels());
-					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(ChannelTable.this,"Could not load data from file.", "Error",JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
-		});
-		
 	}
+//		btnChanLoad.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent btnChanLoad) {
+//
+//				if (fileChooser.showOpenDialog(ChannelTable.this) == JFileChooser.APPROVE_OPTION) {
+//					try {
+//						channelController.loadFromFile(fileChooser.getSelectedFile());
+//						refresh();
+//						System.out.println("test from importData Item " +  ChannelController.getChannels());
+//					} catch (IOException e1) {
+//						JOptionPane.showMessageDialog(ChannelTable.this,"Could not load data from file.", "Error",JOptionPane.ERROR_MESSAGE);
+//					}
+//				}
+//			}
+//		});
+//		
+//	}
 	public void setData(List<Channel> cd) {
 		channelModel.setData(cd);
 	}
